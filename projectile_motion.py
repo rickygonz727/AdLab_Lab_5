@@ -13,5 +13,5 @@ import matplotlib.pyplot as plt
 x1, y1, t1 = np.genfromtxt("phys346_t1.csv",skip_header=1, delimiter=',', unpack=True)
 x2, y2, t2 = np.genfromtxt("phys346_t2.csv",skip_header=1, delimiter=',', unpack=True)
 x3, y3, t3 = np.genfromtxt("phys346_t3.csv",skip_header=1, delimiter=',', unpack=True)
+x5, y5, t5 = np.genfromtxt("Phys346_t5.csv", skip_header=1, delimiter=',', unpack=True)
 
-plt.scatter(t3,y3)
