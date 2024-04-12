@@ -41,20 +41,40 @@ y9d, t9d = np.genfromtxt("Phys346_dropt9.csv", usecols=(0,1), skip_header=1, del
 #%% Differntial Stuff
 
 def velocity_approx(x_array, t_array):
-    v_array = np.zeros(10) #This establishes
+    """This function calculates the array for the velocity data from position and time data. 
     
-    for i in range(1,11):
-        if i != 11 and i != 0:
+    Inputs:
+        x_array (list): The position data
+        t_array (list): The time data
+        
+    Returns:
+        v_array (list): The velocity data
+        
+    """
+    v_array = np.zeros(10) #This establishes an empty array to store the velocity values
+    
+    for i in range(1,11): #We then use a center-difference algorithm to numerically differentiate to get the velocity values
+        if i != 11:
             calc_v = (x_array[i+1] - x_array[i-1]) / (t[i+1] - t[i-1])
-            v_array[i-1] = calc_v
+            v_array[i-1] = calc_v #We then add to our array
     return v_array
 
 
 def accel_approx(v_array, t_array):
-    a_array = np.zeros(9)
+    """This function calculates the array for the acceleration data from velocity and time.
+    
+    Inputs:
+        v_array (list): The velocity data
+        t_array (list): The time data
+        
+    Returns:
+        a_array (list): The accleration data
+        
+    """
+    a_array = np.zeros(8) #This undergoes a similar process to the previous function
     
     for i in range(1,9):
-        if i != 10 and i != 0:
+        if i != 9:
             calc_v = (v_array[i+1] - v_array[i-1]) / (t[i+1] - t[i-1])
             a_array[i-1] = calc_v
     return a_array
