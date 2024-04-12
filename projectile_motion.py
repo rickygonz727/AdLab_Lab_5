@@ -10,47 +10,41 @@ This code is used for the computations of the projectile motion arrays for displ
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.integrate as sci
+import sympy as sp
 
 #%% Data Read-ins
 
+m = 0.0027
 x1, y1, t1 = np.genfromtxt("phys346_t1.csv",skip_header=1, delimiter=',', unpack=True)
 x2, y2, t2 = np.genfromtxt("phys346_t2.csv",skip_header=1, delimiter=',', unpack=True)
 x3, y3, t3 = np.genfromtxt("phys346_t3.csv",skip_header=1, delimiter=',', unpack=True)
-x5, y5, t5 = np.genfromtxt("Phys346_t5.csv", skip_header=1, delimiter=',', unpack=True)
+x4, y4, t4 = np.genfromtxt("Phys346_t5.csv", skip_header=1, delimiter=',', unpack=True)
+x5, y5, t5 = np.genfromtxt("phys346_t6.csv",skip_header=1, delimiter=',', unpack=True)
+x6, y6, t6 = np.genfromtxt("phys346_t7.csv",skip_header=1, delimiter=',', unpack=True)
+x7, y7, t7 = np.genfromtxt("phys346_t8.csv",skip_header=1, delimiter=',', unpack=True)
+x8, y8, t8 = np.genfromtxt("Phys346_t9.csv", skip_header=1, delimiter=',', unpack=True)
+x9, y9, t9 = np.genfromtxt("phys346_t10.csv",skip_header=1, delimiter=',', unpack=True)
+x10, y10, t10 = np.genfromtxt("phys346_t12.csv",skip_header=1, delimiter=',', unpack=True)
+x11, y11, t11 = np.genfromtxt("phys346_t13.csv",skip_header=1, delimiter=',', unpack=True)
 
 
-#%% Calculating Velocities
+x = np.zeros(11)
+y = np.zeros(11)
+t = np.zeros(11)
 
-def x_velocity(x,t):
-    return x/t
+for i in range(11):
+    x_avg = np.average([x1[i],x2[i],x3[i],x4[i],x5[i],x6[i],x7[i],x8[i],x9[i],x10[i],x11[i]])
+    y_avg = np.average([y1[i],y2[i],y3[i],y4[i],y5[i],y6[i],y7[i],y8[i],y9[i],y10[i],y11[i]])
+    t_avg = np.average([t1[i],t2[i],t3[i],t4[i],t5[i],t6[i],t7[i],t8[i],t9[i],t10[i],t11[i]])
+    x[i] = x_avg
+    y[i] = y_avg
+    t[i] = t_avg
 
+vx0 = (x[2]-x[0])/ (t[2]-t[0])
+vy0 = (y[2]-y[0]) / (t[2] - t[0])
 
-def y_velocity(y,t, g=9.8):
-    return y[0] + ((y[2]-y[1])/(t[2]-t[1])) * t + 0.5*g*(t**2)
+cx = 1.533538782E-4
+bx = 0.0019366171
 
+#%% Differntial Stuff
 
-#%% System of Differential Equations in the x-direction
-
-def dxdt(vx):
-    return vx
-
-
-def dvxdt(vx, bx, m=0.0027):
-    return (bx*(vx**2))/m
-
-
-#%% System of Differential Equations in the y-direction
-
-def dydt(vy):
-    return vy
-
-
-def dvydt(vy, by, g=9.8, m=0.0027):
-    return g - ((by*(vy**2))/m)
-
-
-if __name__ == "__main__":
-    #test
-    vx = x_velocity(x1, t1)
-    vy = y_velocity(y1,t1)
-    
