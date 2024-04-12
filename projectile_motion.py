@@ -8,13 +8,12 @@ This code is used for the computations of the projectile motion arrays for displ
 
 
 import numpy as np
-import matplotlib.pyplot as plt
-import scipy.integrate as sci
 import sympy as sp
 
 #%% Data Read-ins
 
 m = 0.0027
+
 x1, y1, t1 = np.genfromtxt("phys346_t1.csv",skip_header=1, delimiter=',', unpack=True)
 x2, y2, t2 = np.genfromtxt("phys346_t2.csv",skip_header=1, delimiter=',', unpack=True)
 x3, y3, t3 = np.genfromtxt("phys346_t3.csv",skip_header=1, delimiter=',', unpack=True)
@@ -61,7 +60,7 @@ for i in range(13):
 
 vx0 = (x[2]-x[0])/ (t[2]-t[0])
 vy0 = (y[2]-y[0]) / (t[2] - t[0])
-
+vx1 = (x[3]-x[1]) / (t[3] - t[1])
 
 #%% Differntial Stuff
 
@@ -85,8 +84,16 @@ def accel_approx(v_array, t_array):
     return a_array
 
 
+#%% Calculations
+
 vx_array = velocity_approx(x,t)
 vy_array = velocity_approx(y,t)
-
 ay_array = accel_approx(vy_array,t)
 
+A = sp.Matrix([[vx0*t[1], vx0*m, -m],
+              [vx1*t[2], vx1*m, -m]])
+
+bx = A.rref()[0][2]
+
+print(f"The Calcualted Acceleration due to Gravity from Numerical Differentiaion: {np.average(ay_array):.5f} m/s^2")
+print(f"The calculated value of the x-coefficient of drag is: {bx:.5f}")
