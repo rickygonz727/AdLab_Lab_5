@@ -139,4 +139,4 @@ g = np.average(accel_avg)
 
 print(f"The Calcualted Acceleration due to Gravity: {g:.5f} m/s^2")
 print(f"The calculated value of the x-coefficient of drag is: {bx:.5f}")
-print(f"The calculated value of the x-coefficient of drag is: {by:.5f}")
+print(f"The calculated value of the y-coefficient of drag is: {by:.5f}")
